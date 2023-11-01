@@ -1,0 +1,19 @@
+.eachItem{
+    display: flex;
+    background-color: aliceblue;
+    justify-content: space-between;
+
+}
+
+.icons{
+    cursor: pointer;
+}
+.edit{
+    color: green;
+}
+.delete{
+    color: red;
+}
+.delete:hover, .eachItem:hover{
+    background-color: rgb(255, 196, 0);
+}
