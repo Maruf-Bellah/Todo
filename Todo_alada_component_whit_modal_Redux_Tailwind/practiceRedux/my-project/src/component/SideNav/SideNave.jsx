@@ -91,7 +91,10 @@ const SideNave = () => {
             <NavLink to="counter">Counter Page</NavLink>
           </li>
           <li>
-            <a>Sidebar Item 2</a>
+            <NavLink to="loginPage">Login Page</NavLink>
+          </li>
+          <li>
+            <NavLink to="RegisterPage">Register Page</NavLink>
           </li>
         </ul>
       </div>

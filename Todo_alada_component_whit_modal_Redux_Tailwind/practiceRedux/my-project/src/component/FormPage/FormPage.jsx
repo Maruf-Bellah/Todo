@@ -29,6 +29,8 @@ const FormPage = () => {
   useEffect(() => {
     localStorage.setItem("listData", JSON.stringify(formData));
   }, [formData]);
+
+
   return (
     <div className="px-5">
       <div className="">
