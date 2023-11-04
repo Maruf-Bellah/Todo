@@ -13,7 +13,7 @@ const FormPage = () => {
   const inputData = JSON.parse(localStorage.getItem('listData')) || [] ;
 
   const [formData, setFormData] = useState(inputData);
-  console.log(formData);
+  // console.log(formData);
   const navigate = useNavigate()
 
   const handleForm = (data) => {

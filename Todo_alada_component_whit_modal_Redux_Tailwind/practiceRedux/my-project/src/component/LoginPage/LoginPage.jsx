@@ -1,16 +1,37 @@
 import { data } from 'autoprefixer';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
+
+  const getInputData =JSON.parse(localStorage.getItem('value'))
 
   const {register, handleSubmit, watch, formState: {errors}} = useForm();
 
 
+  const navigate = useNavigate()
 
-  const onSubmit = data => console.log(data);
-  console.log(watch('example'));
+
+  const [inputData , setInputData] = useState(getInputData)
+
+  console.log(getInputData);
+
+
+  const onSubmit = data =>{
+      const newInputData = [ data]
+      setInputData(newInputData)
+    //   if(newInputData){
+
+    //   navigate='/loginPage'
+    // }
+  }
+
+
+
+  useEffect(()=>{
+    localStorage.setItem('value' , JSON.stringify(inputData))
+  },[inputData])
 
 
     return (
@@ -52,9 +73,9 @@ const LoginPage = () => {
               <div className="form-control mt-6">
                 <button className="btn btn-primary">Login now</button>
               </div>
-              <label className="label">
+              {/* <label className="label">
                   <Link to="/registerPage" className="label-text-alt">Go register page</Link>
-                </label>
+                </label> */}
             </form>
           </div>
         </div>

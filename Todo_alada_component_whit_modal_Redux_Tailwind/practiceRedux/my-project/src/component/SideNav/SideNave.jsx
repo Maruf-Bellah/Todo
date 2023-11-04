@@ -93,9 +93,9 @@ const SideNave = () => {
           <li  className="mb-1">
             <NavLink to="loginPage">Login Page</NavLink>
           </li>
-          <li  className="mb-1">
+          {/* <li  className="mb-1">
             <NavLink to="RegisterPage">Register Page</NavLink>
-          </li>
+          </li> */}
         </ul>
       </div>
     </div>

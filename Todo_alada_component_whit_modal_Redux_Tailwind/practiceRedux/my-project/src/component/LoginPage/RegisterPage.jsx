@@ -1,13 +1,31 @@
 import { data } from 'autoprefixer';
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React, { useEffect, useState } from 'react';
+import { get, useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 const RegisterPage = () => {
 
-    const {register, handleSubmit, watch,formState: {errors}} = useForm()
 
-  const onSubmit = data => console.log(data);
+  const getInputData =JSON.parse(localStorage.getItem('value'))
+  
+  const {register, handleSubmit, watch,formState: {errors}} = useForm()
+  const [inputData , setInputData] = useState(getInputData)
+
+  console.log(getInputData);
+
+
+  const onSubmit = data =>{
+      const newInputData = [...inputData, data]
+    setInputData(newInputData)
+  }
+
+
+
+  useEffect(()=>{
+    localStorage.setItem('value' , JSON.stringify(inputData))
+  },[inputData])
+
+
 
 
     return (
@@ -24,7 +42,7 @@ const RegisterPage = () => {
           <label className="label">
             <span className="label-text">Name</span>
           </label>
-          <input  {...register("name",{required: true} )} {...register("name", { pattern: /^[A-Za-z]+$/i })} placeholder="name" className="input bg-white input-bordered" />
+          <input  {...register("name",{required: true} )} {...register("name", { pattern: /^[A-Za-z]+ [a-zA-Z]+$/i })} placeholder="name" className="input bg-white input-bordered" />
           {errors?.name?.type === "required" && (<span className='label-text-alt mt-2 text-red-600'>This field is required</span>)}
           {errors?.name?.type === "pattern" && (<p className='label-text-alt mt-2 text-red-600'>Alphabetical characters only</p>)}
         </div>
