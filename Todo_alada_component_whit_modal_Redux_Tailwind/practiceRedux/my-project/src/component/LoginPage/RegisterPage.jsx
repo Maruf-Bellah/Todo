@@ -25,7 +25,7 @@ const RegisterPage = () => {
     localStorage.setItem('value' , JSON.stringify(inputData))
   },[inputData])
 
-
+console.log('hello');
 
 
     return (
