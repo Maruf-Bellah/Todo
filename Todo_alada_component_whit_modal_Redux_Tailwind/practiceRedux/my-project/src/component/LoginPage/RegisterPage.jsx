@@ -1,7 +1,15 @@
+import { data } from 'autoprefixer';
 import React from 'react';
+import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 
 const RegisterPage = () => {
+
+    const {register, handleSubmit, watch,formState: {errors}} = useForm()
+
+  const onSubmit = data => console.log(data);
+
+
     return (
         <div>
       
@@ -10,31 +18,47 @@ const RegisterPage = () => {
 
     <div className="card flex-shrink-0 w-full max-w-md shadow-2xl bg-white">
        
-      <form className="card-body">
+      <form onSubmit={handleSubmit(onSubmit)} className="card-body">
         <p className='text-1xl text-info text-center font-bold' >REGISTER PAGE</p>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Name</span>
           </label>
-          <input type="text" placeholder="name" className="input bg-white input-bordered" required />
+          <input  {...register("name",{required: true} )} {...register("name", { pattern: /^[A-Za-z]+$/i })} placeholder="name" className="input bg-white input-bordered" />
+          {errors?.name?.type === "required" && (<span className='label-text-alt mt-2 text-red-600'>This field is required</span>)}
+          {errors?.name?.type === "pattern" && (<p className='label-text-alt mt-2 text-red-600'>Alphabetical characters only</p>)}
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Email</span>
           </label>
-          <input type="email" placeholder="email" className="input bg-white input-bordered" required />
+          <input id='email' type='email'  {...register("email", {
+          required: "This field is required",
+          pattern: {
+            value: /\S+@\S+\.\S+/,
+            message: "Entered value does not match email format",
+          },
+        })} placeholder="email" className="input bg-white input-bordered" />
+          {errors?.email && (<span className='label-text-alt mt-2 text-red-600'>{errors.email.message}</span>)}
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Password</span>
           </label>
-          <input type="password" placeholder="password" className="input bg-white input-bordered" required />
-          <label className="label">
-            <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-          </label>
+          <input  id="password"
+        {...register("password", {
+          required: "This field is required",
+          minLength: {
+            value: 5,
+            message: "min length is 5",
+          },
+        })}
+        type="password" placeholder="password" className="input bg-white input-bordered" />
+
+          {errors?.password && (<span className='label-text-alt mt-2 text-red-600'>{errors.password.message}</span>)}
         </div>
         <div className="form-control mt-6">
-          <button className="btn btn-primary">Login</button>
+          <button className="btn btn-primary">register now</button>
         </div>
         <label className="label">
             <Link className='label-text-alt' to="/loginPage">Go login page</Link>
