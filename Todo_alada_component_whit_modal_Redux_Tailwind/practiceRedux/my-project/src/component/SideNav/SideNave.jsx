@@ -80,20 +80,20 @@ const SideNave = () => {
           aria-label="close sidebar"
           className="drawer-overlay"
         ></label>
-        <ul className="menu p-4 w-80 my-3 min-h-full  bg-white text-base-content">
-          <li>
+        <ul className="menu p-4 w-80 my-3 min-h-full   bg-white text-base-content">
+          <li className="mb-1">
             <NavLink to="/">Form Page</NavLink>
           </li>
-           <li>
+           <li  className="mb-1">
             <NavLink to="/list">List Page</NavLink>
           </li>
-          <li>
+          <li  className="mb-1">
             <NavLink to="counter">Counter Page</NavLink>
           </li>
-          <li>
+          <li  className="mb-1">
             <NavLink to="loginPage">Login Page</NavLink>
           </li>
-          <li>
+          <li  className="mb-1">
             <NavLink to="RegisterPage">Register Page</NavLink>
           </li>
         </ul>
