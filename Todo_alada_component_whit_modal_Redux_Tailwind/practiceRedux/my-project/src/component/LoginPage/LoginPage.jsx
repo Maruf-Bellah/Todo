@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 const LoginPage = () => {
 
-  const getInputData =JSON.parse(localStorage.getItem('value'))
+  const getInputData =JSON.parse(localStorage.getItem('value'));
 
   const {register, handleSubmit, watch, formState: {errors}} = useForm();
 
@@ -19,19 +19,34 @@ const LoginPage = () => {
 
 
   const onSubmit = data =>{
-      const newInputData = [ data]
-      setInputData(newInputData)
-    //   if(newInputData){
-
-    //   navigate='/loginPage'
-    // }
+      // const newInputData = data;
+      setInputData(data)
+      console.log(data);
+      localStorage.setItem('value', JSON.stringify(data))
+      if(data){
+      navigate='/loginPage'
+    }
   }
 
 
 
+  const login = (data) =>{
+     localStorage.setItem('value', JSON.stringify(data))
+     navigate('/')
+  }
+
+
   useEffect(()=>{
-    localStorage.setItem('value' , JSON.stringify(inputData))
-  },[inputData])
+    let login = localStorage.getItem('value');
+    if(login){
+        navigate('/')
+    }
+})
+
+
+  // useEffect(()=>{
+  //   localStorage.setItem('value' , JSON.stringify(inputData))
+  // },[inputData])
 
 
     return (
@@ -71,7 +86,7 @@ const LoginPage = () => {
           {errors?.password && (<span className='label-text-alt mt-2 text-red-600'>{errors.password.message}</span>)}
               </div>
               <div className="form-control mt-6">
-                <button className="btn btn-primary">Login now</button>
+                <button onClick={login} className="btn btn-primary">Login now</button>
               </div>
               {/* <label className="label">
                   <Link to="/registerPage" className="label-text-alt">Go register page</Link>

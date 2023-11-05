@@ -6,7 +6,7 @@ const ProtectRoute = (props) => {
 const navigate = useNavigate();
 
 useEffect(()=>{
-    let login = localStorage.getItem('login');
+    let login = localStorage.getItem('value');
     if(!login){
         navigate('/loginPage')
     }
