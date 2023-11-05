@@ -49,6 +49,8 @@ const LoginPage = () => {
   // },[inputData])
 
 
+  console.log('amar sonar bangla ami tomay valobashi');
+
     return (
         <div className="hero min-h-screen bg-gray-200 ">
         <div className="hero-content flex-col lg:flex-row-reverse">
