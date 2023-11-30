@@ -17,9 +17,14 @@ import {
 import React, { useEffect, useState } from "react";
 import EditModal from "../EditModal/EditModal";
 import { Link, useNavigate } from "react-router-dom";
+import { useAddLeaveMutation, useGetLeaveQuery } from "../../features/apiSlice";
 true;
 
 const ShowData = () => {
+  const { data } = useGetLeaveQuery("6566e648a8d45ce8cf3f0f6b");
+  // const { data2 } = useAddLeaveMutation("6566e648a8d45ce8cf3f0f6b");
+  console.log(data);
+
   const inputData = JSON.parse(localStorage.getItem("setData")) || [];
   const [state, setState] = useState(inputData);
   const [selectedItem, setSelectedItem] = useState(null);

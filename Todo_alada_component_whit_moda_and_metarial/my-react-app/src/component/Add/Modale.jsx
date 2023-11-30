@@ -11,6 +11,10 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import ShowData from "../ShowData/ShowData";
+import {
+  useAddLeaveMutation,
+  useUpdateLeaveMutation,
+} from "../../features/apiSlice";
 
 const style = {
   position: "absolute",
@@ -32,7 +36,8 @@ const Modale = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [inputData, setInputData] = useState(getInputData);
-
+  const [AddLeave, { isSuccess, isLoading, isError }] = useAddLeaveMutation();
+  const [updateLeave] = useUpdateLeaveMutation();
   const { register, handleSubmit } = useForm("");
 
   // add data from input =================================================
@@ -56,7 +61,27 @@ const Modale = () => {
     // data.photoUrls = fileUrls;
 
     let newInputData = [...inputData, data];
+    // let dt = {
+    //   store: "6566e648a8d45ce8cf3f0f6b",
+    //   name: "Shawon",
+    //   type: "EXPENSE",
+    //   status: "ACTIVE",
+    // };
+    data.store = "6566e648a8d45ce8cf3f0f6b";
+    // AddLeave(data);
+    const updateObj = {
+      _id: "656896299ce5da42f6198b42",
+      merchant: "6566e648a8d45ce8cf3f0f67",
+      store: "6566e648a8d45ce8cf3f0f6b",
+      user: "6566e648a8d45ce8cf3f0f69",
+      name: "Shawon Khan",
+      type: "EXPENSE",
+      status: "ACTIVE",
+      createdAt: "2023-11-30T13:54:31.283Z",
+      updatedAt: "2023-11-30T13:54:31.283Z",
+    };
 
+    updateLeave(updateObj);
     localStorage.setItem("setData", JSON.stringify(newInputData));
 
     // if (newInputData ) {
@@ -112,13 +137,10 @@ const Modale = () => {
                 }}
               >
                 <TextField
-                  {...register("firstName", {
-                    required: "this is required",
-                    maxLength: 20,
-                  })}
+                  {...register("name")}
                   // {id: Math.random()}
                   fullWidth
-                  label="First Name"
+                  label="Name"
                   id="fullWidth"
                 />
               </Box>
@@ -129,9 +151,9 @@ const Modale = () => {
                 }}
               >
                 <TextField
-                  {...register("lastName", { required: true, maxLength: 20 })}
+                  {...register("type")}
                   fullWidth
-                  label="Last Name"
+                  label="Type"
                   id="fullWidth"
                 />
               </Box>
@@ -142,27 +164,27 @@ const Modale = () => {
                 }}
               >
                 <TextField
-                  {...register("email", { required: true })}
-                  type="email"
+                  {...register("status")}
+                  type="text"
                   fullWidth
-                  label="Write Email"
+                  label="Status"
                   id="fullWidth"
                 />
               </Box>
-              <Box
+              {/* <Box
                 sx={{
                   my: "9px",
                   maxWidth: "100%",
                 }}
               >
                 <TextField
-                  {...register("age", { min: 10, max: 99 })}
+                  {...register("age")}
                   type="number"
                   fullWidth
                   label="Write Age"
                   id="fullWidth"
                 />
-              </Box>
+              </Box> */}
               {/* <Box
                 sx={{
                   my: "9px",

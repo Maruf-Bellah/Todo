@@ -1,13 +1,13 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 const getBearerToken = () => {
-  return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYzNjc2M2ZjYTY1MWJjNTk4Mzc3MTFkMCIsImlhdCI6MTY5NDI0OTgzMSwiZXhwIjoxNjk0ODU0NjMxfQ.wx9GzfCsqwwdABj3d359D0Ag0aU8I4eroBE3q_vwN3k";
+  return "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NTY2ZTY0OGE4ZDQ1Y2U4Y2YzZjBmNjkiLCJtZXJjaGFudCI6IjY1NjZlNjQ4YThkNDVjZThjZjNmMGY2NyIsImlhdCI6MTcwMTM1MTQyMCwiZXhwIjoxNzAxMzU1MDIwLCJ0eXBlIjoiQUNDRVNTIn0.-qZ_7f-hq1GIy7PKEFIMGImsURaSTIDUy2WCAYoQxxg";
 };
-
+const store = "6566e648a8d45ce8cf3f0f6b";
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://employeeleave.devsujon.com/api/v1/LeaveType",
+    baseUrl: "http://20.212.156.134:5050/api/v2",
     prepareHeaders: (headers) => {
       const token = getBearerToken();
       if (token) {
@@ -19,8 +19,8 @@ export const apiSlice = createApi({
   // tagTypes: [ 'LeaveTypeList' ],
   endpoints: (builder) => ({
     GetLeave: builder.query({
-      query: () => ({
-        url: "/LeaveTypeList/1/500/0",
+      query: (store) => ({
+        url: `/incomes-expenses/sections/${store}?type=EXPENSE`,
         method: "GET",
       }),
       // providesTags: [ 'LeaveTypeList' ]
@@ -32,19 +32,20 @@ export const apiSlice = createApi({
     //   }),
     //   invalidatesTags: ["LeaveTypeList"],
     // }),
+
     AddLeave: builder.mutation({
-      query: (data) => ({
-        url: "/LeaveTypeCreate",
+      query: (postBody) => ({
+        url: "/incomes-expenses/sections",
         method: "POST",
-        body: data,
+        body: postBody,
       }),
       async onQueryStarted(args, { queryFulfilled, dispatch }) {
         try {
-          const { data: addData } = await queryFulfilled;
-          //  console.log(addData)
+          const { data } = await queryFulfilled;
+          console.log(data);
           dispatch(
-            apiSlice.util.updateQueryData("GetLeave", undefined, (draft) => {
-              draft?.push(addData);
+            apiSlice.util.updateQueryData("GetLeave", data.store, (draft) => {
+              return draft?.push(data.data);
             })
           );
         } catch (error) {
@@ -53,14 +54,13 @@ export const apiSlice = createApi({
       },
     }),
 
-    // editLeave: builder.mutation({
-    //   query: ({ id, data }) => ({
-    //     url: `/LeaveTypeUpdate/${id}`,
-    //     method: "PATCH",
-    //     body: data,
-    //   }),
-    //   invalidatesTags: ["LeaveTypeList"],
-    // }),
+    updateLeave: builder.mutation({
+      query: (updateBody) => ({
+        url: `/incomes-expenses/sections/${updateBody._id}`,
+        method: "PATCH",
+        body: updateBody,
+      }),
+    }),
   }),
 });
 
@@ -69,4 +69,5 @@ export const {
   useAddLeaveMutation,
   //   useRemoveLeaveTypeMutation,
   //   useEditLeaveMutation,
+  useUpdateLeaveMutation,
 } = apiSlice;
